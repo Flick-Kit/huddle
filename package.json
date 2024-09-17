@@ -2,6 +2,10 @@
   "name": "huddle",
   "module": "./src/index.ts",
   "type": "module",
+  "scripts": {
+    "lint": "eslint . --color --cache --format=pretty",
+    "lint_hook": "eslint --color --cache --format=pretty"
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "@typescript-eslint/eslint-plugin": "^8.4.0",
