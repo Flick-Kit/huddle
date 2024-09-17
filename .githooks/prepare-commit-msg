@@ -1,0 +1,40 @@
+#!/bin/sh
+
+pad_right() {
+	echo -en "\e[2m"
+	printf "%-*s" "$2" "$1"
+	echo -en "\e[0m"
+}
+
+echo -n "$(pad_right "Checking for dual signoff..." 45)"
+
+test "" = "$(grep '^Signed-off-by: ' "$1" 2> /dev/null |
+	sort | uniq -c | sed -e '/^[   ]*1[    ]/d')" || {
+		echo -e "\033[31mFAIL\033[39m\n"
+		echo >&2 Duplicate Signed-off-by lines.
+		exit 1
+	}
+echo -e "\033[32mPASSED\033[39m"
+
+echo -n "$(pad_right "Checking message scopes..." 45)"
+
+commit_msg_file=$1
+commit_msg=$(cat "$commit_msg_file")
+
+# Validate the commit message format
+commit_msg_regex="^(feat|fix|docs|style|refactor|perf|test|chore)(\([a-zA-Z0-9_-]+\))?: .{1,100}$"
+commit_len_regex="(\([a-zA-Z0-9_-]+\))?: .{1,100}$"
+if ! [[ "$commit_msg" =~ $commit_msg_regex ]]; then
+	echo -e "\033[31mFAIL\033[39m\n"
+	if ! [[ "$commit_msg" =~ $commit_len_regex ]]; then
+	  echo -e "\033[31mERROR: Your message is too long! Shorten it!"
+		exit 1
+	fi
+
+	echo -e "\033[31mERROR: Commit message does not follow the conventional commit format.\033[39m"
+	echo -e "Format: <type>(<scope>): <description> \n\n The types are:\n  feat, fix, docs, style, refactor, perf, test, chore\n\nYou can also optionally add a number to relate to a specific issue.\n"
+	exit 1
+fi
+
+echo -e "\033[32mPASSED\033[39m"
+echo
