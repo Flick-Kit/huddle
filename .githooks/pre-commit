@@ -40,3 +40,12 @@ if [ $? -ne 0 ]; then
 fi
 
 echo -e "\033[32mPASSED\033[39m"
+
+echo -n "$(pad_right "Doing final static test..." 45)"
+bun snyk code test &>/dev/null
+if [ $? -ne 0 ]; then
+  echo -e "\033[31mFAIL\033[39m"
+  exit 1
+fi
+
+echo -e "\033[32mPASSED\033[39m"
