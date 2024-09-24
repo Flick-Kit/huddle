@@ -1,9 +1,10 @@
 # Huddle
 
 <a href="https://securityscorecards.dev/viewer/?uri=github.com/Flick-Kit/Huddle">
-  <img alt="OpenSSF Scorecard" src="https://securityscorecards.dev/viewer/?uri=github.com/Flick-Kit/Huddle/badge" />
+  <img alt="OpenSSF Scorecard" src="https://api.securityscorecards.dev/projects/github.com/Flick-Kit/Huddle/badge" />
 </a>
 
+---
 
 > [!IMPORTANT]
 > Huddle is incomplete (started on 18/09/2024) and not on NPM yet, nor will it be until v1 is done and basic tasks have been completed. Thanks for checking us out; You're awesome. 😎
